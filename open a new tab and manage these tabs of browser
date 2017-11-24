@@ -1,0 +1,20 @@
+//To open a new tab 
+
+	    Robot r = new Robot(); 
+	    r.keyPress(KeyEvent.VK_CONTROL); 
+	    r.keyPress(KeyEvent.VK_T); 
+	    r.keyRelease(KeyEvent.VK_CONTROL); 
+	    r.keyRelease(KeyEvent.VK_T); 
+     
+ //To switch to the new tab
+ 
+	    ArrayList<String> tabs = new ArrayList<String>(driver.getWindowHandles());
+
+//you can do driver action on new window tab 
+	    
+	    driver.switchTo().window(tabs.get(1));
+      
+      
+//you can come back to home window tab and can do your driver action 
+
+     driver.switchTo().window(tabs.get(0));
