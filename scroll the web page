@@ -1,0 +1,13 @@
+//for angular project,you can scroll the browser by below code
+
+WebElement scroll_to_the element=driver.findElement(By.xpath("//input[@krish='krish']"));
+((JavascriptExecutor) driver).executeScript(
+        "arguments[0].scrollIntoView();", scroll_to_the element);
+        
+        
+        
+        
+//for java project,you can scroll the browser by below code     
+
+JavascriptExecutor scroll = (JavascriptExecutor)driver;
+	    jse.executeScript("window.scrollBy(0,250)", "");
