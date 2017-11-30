@@ -1,0 +1,31 @@
+
+//use of split() and trim() in selenium
+
+//pleas check the below content and we have to find out the code.
+/*
+Dear User,
+
+Your OTP for k  application: 9486
+
+Sincerely,
+krish sagar
+
+**************** CAUTION - Disclaimer *****************
+This e-mail contains PRIVILEGED AND CONFIDENTIAL INFORMATION intended solely for the use of the addressee(s). 
+If you are not the intended recipient, please notify the sender by e-mail and delete the original message. Further, 
+***krish sagar******** End of Disclaimer *******krish sagar***.all_mail_content
+
+*/
+     
+    String all_mail_content=driver.findElement(By.xpath("//xpath")).getText();
+    String code="";
+	  String[] parts = all_mail_content.split("application: ");
+		//String first = parts[0];
+		String second = parts[1];
+		String[] part = second.split("Sincerely,");
+		String first_part = part[0];
+		//String second_part = part[1];
+		//System.out.println("code:- " +second_part.trim());
+		System.out.println("new_code:- " +first_part.trim());
+		code=first_part.trim();
+    System.out.println(code);
