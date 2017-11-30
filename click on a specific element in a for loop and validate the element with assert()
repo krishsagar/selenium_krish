@@ -1,0 +1,13 @@
+//click on a specific element in a for loop and validate the element with assert()
+
+
+    WebElement cust = driver.findElement(By.id("status"));
+		String finalDatacust1 = "";
+		for (int i = 0; i < cust.findElements(By.tagName("option")).size(); i++) {
+		finalDatacust1 = finalDatacust1 + cust.findElements(By.tagName("option")).get(i).getText().trim();
+		// System.out.println("data " + finalData);
+		if (cust.findElements(By.tagName("option")).get(i).getText().contains("Re-open")) {
+			cust.findElements(By.tagName("option")).get(i).click();
+			}
+		}
+		Assert.assertEquals(finalDatacust1, "Select StatusClosed");
