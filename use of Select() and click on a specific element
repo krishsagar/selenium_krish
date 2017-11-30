@@ -1,0 +1,15 @@
+//use of select() and click on a specific element
+
+      WebElement selectonetechnician = driver.findElement(By.xpath("//xpath"));
+			Select one = new Select(selectonetechnician);
+			List<WebElement> ok = one.getOptions();
+			for (int i = 0; i < ok.size(); i++) {
+			System.out.println(i);
+			ok.get(i).getText();
+			System.out.println(ok.get(i).getText());
+			}
+			Select choosetech = new Select(selectonetechnician);
+			Thread.sleep(1000l);
+			choosetech.selectByIndex(1);
+			driver.findElement(By.xpath("//xpath")).click();
+			Thread.sleep(1000l);
