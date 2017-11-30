@@ -1,9 +1,8 @@
 //To click on a popup message of angular application
 
-    Thread.sleep(5000l);
-	  WebElement new_popup_window=driver.findElement(By.xpath("//xpath"));
-	  WebElement click_yes=driver.findElement(By.xpath("//xpath"));	    
+          Thread.sleep(5000l);
+	  WebElement new_popup_window=driver.findElement(By.xpath("//xpath"));   
 	  Actions window_shift=new Actions(driver); 		
-	  window_shift.moveToElement(new_popup_window).moveToElement(click_yes).click().build().perform();
+	  window_shift.moveToElement(new_popup_window).click().build().perform();
 	  Thread.sleep(4000l);
-	  WebElement reg_approve_ok=	driver.findElement(By.xpath("//xpath"));
+	  WebElement reg_approve_ok=driver.findElement(By.xpath("//xpath"));
