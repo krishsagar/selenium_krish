@@ -1,0 +1,11 @@
+// Launch InternetExplorerDriver
+// System.setProperty("webdriver.ie.driver", "D:\\selenium driver\\IEDriverServer.exe");
+// WebDriver driver = new InternetExplorerDriver();
+// Launch FirefoxDriver
+//System.setProperty("webdriver.gecko.driver","D:\\selenium driver\\geckodriver.exe");
+//WebDriver driver = new FirefoxDriver();
+		System.setProperty("webdriver.chrome.driver", "D:\\selenium driver\\chromedriver.exe");
+		WebDriver driver= new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.get("www.@@@@@.com");
+		driver.manage().window().maximize();
