@@ -1,0 +1,38 @@
+//use of datepicker by selenium
+
+driver.findElement(By.id("datepicker")).click();
+
+/*user can use the below code for future date*/
+
+		String selectdata="2017-08-11";
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = df.parse(selectdata);
+		SimpleDateFormat newFormat = new SimpleDateFormat("yyyy-MMMM-dd");
+		String finalString = newFormat.format(date);
+		System.out.println(finalString);
+		System.out.println(finalString);
+		String[] split=finalString.split("-");
+		System.out.println(split[0]+" "+split[1]+" "+split[2]);
+		String month=split[1];
+		System.out.println("month..."+month);
+		while(true)
+		{
+			try{
+				driver.findElement((By.xpath("//span[text()='"+month+"']"))).isDisplayed();
+				String firstpart="//a[text()='";
+				String secondpart="']";
+				String[] splitdate=selectdata.split("-");
+				String finaldate=firstpart+splitdate[2]+secondpart;
+				driver.findElement(By.xpath(finaldate)).click();
+				break;
+			}
+			catch(Exception i)
+			{
+				driver.findElement(By.xpath("//span[text()='Next']")).click();
+				Thread.sleep(2000l);
+
+			}
+		}
+
+		driver.findElement(By.xpath("//select[@name='preferred_time']")).click();
+		Thread.sleep(1000l);
