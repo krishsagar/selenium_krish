@@ -1,0 +1,8 @@
+//user firefox browser 55.0 (64-bit), which is supported to selenium.
+//user firefox browser 55.0 (64-bit), which is supported to firebug.
+//user firefox browser 55.0 (64-bit), which is supported to firepath.
+
+
+  System.setProperty("webdriver.gecko.driver","D:\\selenium driver\\geckodriver.exe");
+	WebDriver driver = new FirefoxDriver();
+	driver.get("https://www.#######.com");
