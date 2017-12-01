@@ -1,0 +1,11 @@
+//canvas operation
+
+
+WebElement canvas=driver.findElement(By.xpath("//canvas"));
+Actions canvas_click=new Actions(driver);
+canvas_click.clickAndHold(canvas).moveByOffset(10, 50).
+moveByOffset(50,10).
+moveByOffset(-10,-50).
+moveByOffset(-50,-10).release().perform();
+Thread.sleep(5000l);
+driver.findElement(By.xpath("(//span[text()='Save'])[2]")).click();
