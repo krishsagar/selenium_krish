@@ -1,0 +1,18 @@
+
+
+//use of FluentWait in selenium
+
+
+              Wait<WebDriver> wait =new FluentWait<WebDriver>(driver).withTimeout(120, TimeUnit.SECONDS).pollingEvery(10, TimeUnit.SECONDS).ignoring(NoSuchElementException.class);
+	            
+	            WebElement element = wait.until(new Function<WebDriver, WebElement>() {
+	    			  public WebElement apply(WebDriver driver) {
+	    				WebElement element = driver.findElement(By.xpath("(//span/b[text()='Account Activation'])[1]"));
+	    				String getTextOnPage = element.getText();
+	    				System.out.println(getTextOnPage);
+	    					return element;
+	    					
+	    				}
+	    			
+	    	    	});
+	            
