@@ -1,0 +1,7 @@
+//use of alert in script
+
+
+            Thread.sleep(5000l);
+						Alert al = driver.switchTo().alert();
+						al.accept();
+						Thread.sleep(2000l);
