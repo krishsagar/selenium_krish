@@ -1,0 +1,10 @@
+//selenium script
+	 driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		    	Runtime.getRuntime().exec("D:\\open.exe");
+
+//script of autoit
+
+
+WinWaitActive("Open")
+Send("images.jpg")
+Send("{ENTER}")
