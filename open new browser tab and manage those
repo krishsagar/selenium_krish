@@ -1,0 +1,14 @@
+//The script that will will open a new blank window
+//If you want to open a link new tab, replace 'about:blank' with a link
+String a = "window.open('about:blank','_blank');";
+((JavascriptExecutor)driver).executeScript(a);
+
+
+
+//manage all tabs
+ArrayList<String> tabs = new ArrayList<String> (driver.getWindowHandles());
+
+    driver.switchTo().window(tabs.get(0));
+		driver.get("https://www.google.in/");
+		driver.switchTo().window(tabs.get(1));
+		driver.get("https://www.india.in/");
