@@ -1,0 +1,5 @@
+//keyboard tab key
+
+
+        Actions builder = new Actions(driver);
+				builder.sendKeys(Keys.TAB).sendKeys(Keys.ENTER).build().perform();
