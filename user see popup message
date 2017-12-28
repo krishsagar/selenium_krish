@@ -1,0 +1,5 @@
+//user should see popup message on the browser
+
+
+        JavascriptExecutor js = (JavascriptExecutor)driver;
+				js.executeScript("alert('Welcome to SDRC');"); 
