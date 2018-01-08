@@ -3,3 +3,25 @@
 
         JavascriptExecutor js = (JavascriptExecutor)driver;
 				js.executeScript("alert('Welcome to SDRC');"); 
+				
+				
+				
+				
+				
+//show your message on the browser
+
+
+
+JFrame parent = new JFrame();
+
+	    JOptionPane.showMessageDialog(parent, "Hello krish, check your selenium script");
+	    
+	    
+	    
+	    
+//
+ JFrame parent = new JFrame();
+
+	    JOptionPane.showMessageDialog(parent, "Hello krish, check your selenium script" +kl.getMessage(), "ERROR!", JOptionPane.ERROR_MESSAGE);
+
+	    parent.setComponentZOrder(parent, 100);
