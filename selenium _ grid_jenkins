@@ -1,0 +1,35 @@
+-create a projecte.
+-create or convert the selenium script to testng.xml file.
+-creatre a .bat file.
+//projectLocation- will be change ,and set your project path., save the .bat file to your project.
+
+                set projectLocation=D:\selenium\projectess
+                cd %projectLocation%
+                set classpath=%projectLocation%\bin;%projectLocation%\lib\*
+                java org.testng.TestNG %projectLocation%\testng.xml
+                pause
+-run the .bat file, and check your project has runned or not.
+-integrate/save jenkins .war file into your project folder.
+-on the place of .war file , open the cmd, enter the command and enter  :- 
+                            
+                            java -jar Jenkins.war
+-jenkins will open by the browser with url :-
+                           http://localhost:8080/ 
+                           
+ -create a new jenkins project:-
+                             advance > Use custom workspace > enter your project path.
+                             Build Triggers > Build periodically > 10 16 * * * 
+                                                                 Jenkins uses a cron expression, the different fields are :
+
+                                                                 MINUTES Minutes in one hour (0-59)
+                                                                 HOURS Hours in one day (0-23)
+                                                                 DAYMONTH Day in a month (1-31)
+                                                                 MONTH Month in a year (1-12)
+                                                                 DAYWEEK Day of the week (0-7) where 0 and 7 are sunday
+                                                                 
+                                                                 Example: 0 8 * * * : schedule your build every day at 8h 00, this will do the job
+                             Build > Command > D:\selenium\projectess\testNGBatchFile.bat
+                             apply
+                             run build
+                             
+                            
