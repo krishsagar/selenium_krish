@@ -4,7 +4,7 @@
 //java -jar selenium-server-standalone-3.8.1.jar -role hub
 //put the below code in node cmd
 //at node system the directory where we placed the Selenium Server. On the command prompt, type 
-//java -Dwebdriver.chrome.driver="C:\chromedriver.exe" -jar selenium-server-standalone-3.8.1.jar -role node -hub http://192.168.1.23:4444/grid/register -port 5656
+//java -Dwebdriver.chrome.driver="C:\chromedriver.exe" -jar selenium-server-standalone-3.8.1.jar -role node -hub http://192.168.1.170:4444/grid/register -port 5656
 
 public class hub_and_node {
 	
