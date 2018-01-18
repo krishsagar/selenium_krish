@@ -1,0 +1,51 @@
+RemoteWebDriver driver;
+	//WebDriver driver;
+	String nodeurl;
+	@Test
+	public void yes_facility_dataentry() throws InterruptedException, AWTException, IOException
+	{
+try {
+			nodeurl="http://192.168.1.251:5656/wd/hub";
+			DesiredCapabilities capabilities=DesiredCapabilities.chrome();
+			capabilities.setBrowserName("chrome");
+			capabilities.setPlatform(Platform.WIN10);
+			driver=new RemoteWebDriver(new URL(nodeurl),capabilities);
+			driver.manage().deleteAllCookies();
+			driver.manage().window().maximize();
+			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+			driver.manage().timeouts().pageLoadTimeout(45, TimeUnit.SECONDS);
+			//driver.get("http://192.168.1.31:8080/ess-test/");
+			//driver.get("http://192.168.1.105:8080/ess/");
+			driver.get("http://192.168.1.105:8080/ess-de/");
+			  //DesiredCapabilities.setCapability("sikuliExtension", true);
+        
+        
+      //for upload image on remote machine.  
+			((RemoteWebDriver)driver).setFileDetector(new LocalFileDetector());
+      
+      
+      
+      
+			driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+	       // System.out.println("GRIDLASTIC VIDEO URL: "  + ((RemoteWebDriver) driver).getSessionId()); 
+		    }
+		catch(MalformedURLException e)
+		{
+			e.printStackTrace();
+		}
+		Thread.sleep(2000l);
+		WebElement scroll_to_img2=driver.findElement(By.xpath("//input[@id='img2']"));
+		((JavascriptExecutor) driver).executeScript(
+		    "arguments[0].scrollIntoView();", scroll_to_img2);
+		Thread.sleep(4000l);
+    
+    
+     //for upload image on remote machine.  
+		driver.findElement(By.xpath("//input[@id='img2']")).sendKeys("D:\\images.jpg");
+    
+    
+    
+		Thread.sleep(4000l);
+    	
+				
+		
