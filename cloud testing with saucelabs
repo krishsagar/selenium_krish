@@ -1,0 +1,43 @@
+public class DemoSauce {
+	@Test
+	public void demo()
+	{
+		  String USERNAME = "krish";
+		  String ACCESS_KEY = "c93f7b62-e261-41c6-bb4b-f8755f0caba";
+		  //String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443";
+		 String URL = "https://" + USERNAME + ":" + ACCESS_KEY + "@ondemand.saucelabs.com:443/wd/hub";
+		  
+
+		        DesiredCapabilities caps = DesiredCapabilities.chrome();
+		        caps.setCapability("platform", "Windows 8.1");
+		       // caps.setCapability("version", "latest");
+		        caps.setCapability("version", "55");
+		        caps.setCapability("browserName", "chrome");
+
+		        System.out.println(URL);
+
+		        try {
+
+		            WebDriver driver = new RemoteWebDriver(new URL(URL), caps);
+
+		            /**
+		             * Goes to Sauce Lab's guinea-pig page and prints title
+		             */
+		            //driver.get("https://saucelabs.com/test/guinea-pig");
+		            driver.get("http://sdrc.co.in/");
+
+		            // System.out.println("title of page is: " + driver.getTitle());
+		            // driver.quit();
+		            
+		            String sdrctitle=driver.getTitle();
+		            System.out.println(sdrctitle);
+		            
+		            
+		            
+
+		        } catch(Exception e) {
+		            System.out.println(e);
+		        }
+	}
+
+}
