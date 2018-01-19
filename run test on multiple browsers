@@ -1,0 +1,6 @@
+DesiredCapabilities[] browsers = {DesiredCapabilities.firefox(),DesiredCapabilities.chrome(),DesiredCapabilities.internetExplorer()};
+    for(DesiredCapabilities browser : browsers)
+    {
+        try{
+            System.out.println("Testing in Browser: "+browser.getBrowserName());
+            driver = new RemoteWebDriver(new URL("http://127.0.0.1:4444/wd/hub"), browser);
