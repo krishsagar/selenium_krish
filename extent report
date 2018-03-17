@@ -1,0 +1,168 @@
+package newpack;
+
+import java.io.File;
+import java.lang.reflect.Method;
+
+import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+
+public class EssReview {
+
+	
+	ExtentReports reports;
+	ExtentTest testinfo;
+	ExtentHtmlReporter htmlreporter;
+	
+	
+	@BeforeTest
+	public void setup()
+	{
+		
+		htmlreporter =new ExtentHtmlReporter(new File(System.getProperty("user.dir")+ "/AutomationReport.html"));
+		htmlreporter.loadXMLConfig(new File(System.getProperty("user.dir")+ "/extent-config.xml"));
+		reports=new ExtentReports();
+		reports.setSystemInfo("Environment", "QA");
+		reports.setSystemInfo("project name ", "ESS");
+		reports.setSystemInfo("build number", "1.0.0");
+		reports.setSystemInfo("tester name", "krishna sagar");
+		reports.attachReporter(htmlreporter);
+	}
+	
+	@Test
+	public void onees()
+	{
+
+		Assert.assertTrue(true);
+		testinfo.log(Status.INFO, "this is test one");
+		
+	}
+	
+	
+	@Test
+	public void twoes()
+	{
+
+		Assert.assertTrue(false);
+		testinfo.log(Status.INFO, "this is test one");
+		
+	}
+	
+	
+	
+	
+	@BeforeMethod
+	public void login(Method method)
+	{
+		String testName=method.getName();
+		testinfo=reports.createTest(testName);
+	}
+	
+	
+	@AfterMethod
+	public void captureStatus(ITestResult result)
+	{
+		if(result.getStatus()==ITestResult.SUCCESS)
+		{
+			testinfo.log(Status.PASS, "the test method name as:" +result.getName()+ "is passed");
+		}
+			
+		else if(result.getStatus()==ITestResult.FAILURE)
+		{
+			testinfo.log(Status.FAIL, "the failure test method name as:" +result.getName()+ "is failed");
+			
+			
+		}
+			
+			
+		else if(result.getStatus()==ITestResult.SKIP)
+		{
+			testinfo.log(Status.SKIP, "the skipped test method name as:" +result.getName()+ "is skipped");
+			
+			
+		}
+			
+	}
+	
+	
+
+	@AfterTest
+	public void cleanup()
+	{
+		reports.flush();
+	}
+		
+}
+
+
+
+--------------------------------------------------------------------------------------------------------
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<extentreports>
+    <configuration>
+        <!-- report theme -->
+        <!-- standard, dark -->
+        <theme>dark</theme>
+    
+        <!-- document encoding -->
+        <!-- defaults to UTF-8 -->
+        <encoding>UTF-8</encoding>
+        
+        <!-- protocol for script and stylesheets -->
+        <!-- defaults to https -->
+        <protocol>https</protocol>
+        
+        <!-- title of the document -->
+        <documentTitle>Extent</documentTitle>
+        
+        <!-- report name - displayed at top-nav -->
+        <reportName>Automation Report by krishna sagar</reportName>
+        
+        <!-- location of charts in the test view -->
+        <!-- top, bottom -->
+        <testViewChartLocation>bottom</testViewChartLocation>
+		
+        <!-- custom javascript -->
+        <scripts>
+            <![CDATA[
+                $(document).ready(function() {
+                    
+                });
+            ]]>
+        </scripts>
+        
+        <!-- custom styles -->
+        <styles>
+            <![CDATA[
+                
+            ]]>
+        </styles>
+    </configuration>
+</extentreports>
+
+
+------------------------------------------------------------------------------------------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test thread-count="5" name="Test">
+    <classes>
+      <class name="newpack.EssReview"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
