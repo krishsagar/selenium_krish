@@ -1,0 +1,357 @@
+package newpack;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import org.apache.commons.io.FileUtils;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.JavascriptExecutor;
+import org.openqa.selenium.OutputType;
+import org.openqa.selenium.TakesScreenshot;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.testng.Assert;
+import org.testng.ITestResult;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.AfterTest;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.BeforeTest;
+import org.testng.annotations.Test;
+
+import com.aventstack.extentreports.ExtentReports;
+import com.aventstack.extentreports.ExtentTest;
+import com.aventstack.extentreports.MediaEntityBuilder;
+import com.aventstack.extentreports.Status;
+import com.aventstack.extentreports.reporter.ExtentHtmlReporter;
+
+
+public class EssReview {
+
+	public WebDriver driver;
+	public ExtentReports reports;
+	public ExtentTest testinfo;
+	public ExtentHtmlReporter htmlreporter;
+	
+	
+	@BeforeTest
+	public void setup()
+	{
+		
+		htmlreporter =new ExtentHtmlReporter(new File(System.getProperty("user.dir")+ "/AutomationReport.html"));
+		htmlreporter.loadXMLConfig(new File(System.getProperty("user.dir")+ "/extent-config.xml"));
+		//htmlreporter.loadXMLConfig(new File(System.getProperty("user.dir")+ "/professionalConfig.xml"));
+		reports=new ExtentReports();
+		reports.setSystemInfo("Environment", "QA");
+		reports.setSystemInfo("project name ", "ESS");
+		reports.setSystemInfo("build number", "1.0.0");
+		reports.setSystemInfo("tester name", "krishna sagar");
+		reports.attachReporter(htmlreporter);
+	}
+	
+	
+	
+	public static String getScreenShot(WebDriver driver , String screenShotname) throws IOException
+	{
+		
+		String dateName = new SimpleDateFormat("yyyyMMddhhmmss").format(new Date());
+		
+		TakesScreenshot ts=(TakesScreenshot)driver;
+		File source=ts.getScreenshotAs(OutputType.FILE);
+	
+		
+		//String screenshotBase64 = ((TakesScreenshot) driver).getScreenshotAs(OutputType.BASE64);
+		String destination=System.getProperty("user.dir")+"/FailedTestsScreenshots"+screenShotname+dateName+".png";
+		File finalDestination=new File (destination);
+		FileUtils.copyFile(source, finalDestination);
+		return destination;
+	}
+		
+	
+/*	@Test
+	public void onees() throws InterruptedException, IOException
+	{
+
+	Thread.sleep(4000l);
+		
+		Properties prop2 = new Properties();
+		FileInputStream fis2 = new FileInputStream(
+				"D:\\selenium\\Demoreport\\controldemoReport.properties");
+		
+		prop2.load(fis2);
+		
+		
+		
+		
+		//Assert.assertTrue(true);
+		//testinfo.log(Status.INFO, "this is test one");
+		
+		driver.findElement(By.xpath("//button[text()='Login']")).click();
+		Thread.sleep(2000l);
+		 JavascriptExecutor js1 = (JavascriptExecutor)driver;
+			js1.executeScript("alert('case1(without username and without password)');");
+			 Thread.sleep(5000l);
+				Alert al = driver.switchTo().alert();
+				al.accept();
+				Thread.sleep(2000l);	
+		System.out.println("case1(without username and password)");
+		//driver.findElement(By.xpath("//input[@id='username']")).sendKeys("superadmin");
+		//driver.findElement(By.xpath("//input[@id='password']")).sendKeys("test@123#!");
+		driver.findElement(By.xpath("//button[@id='submit']")).click();
+		
+		//case2(valid username without password
+		//System.out.println(login_ele.isDisplayed()+"check2");
+		JavascriptExecutor js2 = (JavascriptExecutor)driver;
+		js2.executeScript("alert('case2(valid username without password)');");
+		 Thread.sleep(5000l);
+			Alert a2 = driver.switchTo().alert();
+			a2.accept();
+			Thread.sleep(2000l);
+       System.out.println("case2(valid username without password");
+		//driver.findElement(By.xpath("//button[text()='Login']")).click();
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//input[@id='username']")).click();
+		driver.findElement(By.xpath("//input[@id='username']")).sendKeys(prop2.getProperty("ValidUsername"));
+		driver.findElement(By.xpath("//input[@id='password']")).clear();
+		driver.findElement(By.xpath("//button[@id='submit']")).click();
+		//case3(valid password without username)
+		//System.out.println(login_ele.isDisplayed()+"check3");
+		JavascriptExecutor js3 = (JavascriptExecutor)driver;
+		js3.executeScript("alert('case3(without username and valid password )');");
+		 Thread.sleep(5000l);
+			Alert a3 = driver.switchTo().alert();
+			a3.accept();
+			Thread.sleep(2000l);
+		//System.out.println("case3(valid password without username)");
+		//driver.findElement(By.xpath("//button[text()='Login']")).click();
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//input[@id='username']")).clear();
+		//driver.findElement(By.xpath("//input[@id='username']")).sendKeys("superadmin");
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(prop2.getProperty("ValidPassword"));
+		driver.findElement(By.xpath("//button[@id='submit']")).click();
+		//case4(invalid password with valid username)
+		//System.out.println(login_ele.isDisplayed()+"check4");
+		JavascriptExecutor js4 = (JavascriptExecutor)driver;
+		js4.executeScript("alert('case4( valid username with invalid password )');");
+		
+		 Thread.sleep(5000l);
+			Alert a4 = driver.switchTo().alert();
+			a4.accept();
+			Thread.sleep(2000l);
+		System.out.println("case4(valid username with invalid password )");
+
+		//driver.findElement(By.xpath("//button[text()='Login']")).click();
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//input[@id='username']")).sendKeys(prop2.getProperty("ValidUsername"));
+		driver.findElement(By.xpath("//input[@id='password']")).clear();
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(prop2.getProperty("InvalidPassword"));
+		driver.findElement(By.xpath("//button[@id='submit']")).click();
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//button[text()='Login']")).click();
+		//case5(invalid username with valid password)
+		JavascriptExecutor js5 = (JavascriptExecutor)driver;
+		js5.executeScript("alert('case5(invalid username with valid password)');");
+		
+		 Thread.sleep(5000l);
+			Alert a5 = driver.switchTo().alert();
+			a5.accept();
+			Thread.sleep(2000l);
+		System.out.println("case5(invalid username with valid password)");
+		
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//input[@id='username']")).clear();
+		driver.findElement(By.xpath("//input[@id='username']")).sendKeys(prop2.getProperty("InvalidUsername"));
+		driver.findElement(By.xpath("//input[@id='password']")).clear();
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(prop2.getProperty("ValidPassword"));
+		driver.findElement(By.xpath("//button[@id='submit']")).click();
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//button[text()='Login']")).click();
+		//case6(valid username and password)
+		JavascriptExecutor js6 = (JavascriptExecutor)driver;
+		js6.executeScript("alert('case6(valid username and password)');");
+		 Thread.sleep(5000l);
+			Alert a6 = driver.switchTo().alert();
+			a6.accept();
+			Thread.sleep(2000l);
+		System.out.println("case6(valid username and valid password)");
+	
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//input[@id='username']")).clear();
+		driver.findElement(By.xpath("//input[@id='username']")).sendKeys(prop2.getProperty("ValidUsername"));
+		driver.findElement(By.xpath("//input[@id='password']")).clear();
+		driver.findElement(By.xpath("//input[@id='password']")).sendKeys(prop2.getProperty("ValidPassword"));
+		driver.findElement(By.xpath("//button[@id='submit']")).click();
+		
+		Thread.sleep(4000l);
+
+		driver.findElement(By.xpath("//div/a[text()='Logout']")).click();
+
+		
+	}
+	*/
+	
+	@Test
+	public void three() throws InterruptedException
+	{
+		Thread.sleep(4000l);
+		driver.findElement(By.xpath("//a[contains(text(),'About Us')]")).click();
+		String ess_title=driver.getTitle();
+		Assert.assertEquals(ess_title, "krish test title");
+	}
+	
+	
+	
+	@Test
+	public void twoes()
+	{
+
+		String ess_title=driver.getTitle();
+		Assert.assertEquals(ess_title, "krish test title");
+		
+	}
+	
+
+	@BeforeMethod
+	public void login(Method method) throws IOException
+	{
+		String testName=method.getName();
+		testinfo=reports.createTest(testName);
+		System.setProperty("webdriver.chrome.driver", "D:/selenium driver/chromedriver.exe");
+		driver= new ChromeDriver();
+		driver.manage().window().maximize(); 
+		driver.manage().deleteAllCookies();
+		driver.manage().timeouts().pageLoadTimeout(20,  TimeUnit.SECONDS);
+		driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
+		//driver.get("http://192.168.1.251:8080/ess/");
+		
+
+		Properties prop1 = new Properties();
+		FileInputStream fis1 = new FileInputStream(
+				"D:\\selenium\\Demoreport\\controldemoReport.properties");
+		
+		prop1.load(fis1);
+		//it will open the url=" link ", which was mention on datadriven.properties file.
+			System.out.println(prop1.getProperty("url"));
+			driver.get(prop1.getProperty("url"));
+		
+	}
+	
+	
+	@AfterMethod
+	public void captureStatus(ITestResult result) throws IOException, InterruptedException
+	{
+		if(result.getStatus()==ITestResult.SUCCESS)
+		{
+			testinfo.log(Status.PASS, "the test method name as:" +result.getName()+ "is passed");
+			
+		}
+			
+		else if(result.getStatus()==ITestResult.FAILURE)
+		{
+			
+			testinfo.log(Status.FAIL, "the failure test method name as:" +result.getName()+ "is failed");
+			testinfo.log(Status.FAIL, "the failure test method name as:" +result.getThrowable()+ "is failed");
+			Thread.sleep(4000l);
+			
+			//testinfo.fail("details", MediaEntityBuilder.createScreenCaptureFromPath("C:\\Users\\SDRC_ADMIN\\Pictures\\Screenshots\\Screenshot (33).png").build());
+			/*MediaEntityModelProvider mediaModel = MediaEntityBuilder.createScreenCaptureFromPath("screenshot.png").build();
+			testinfo.fail("details", mediaModel);*/
+			
+			String screenshotPath=EssReview.getScreenShot(driver, result.getName());
+			testinfo.addScreenCaptureFromPath(screenshotPath);
+			testinfo.log(Status.FAIL,screenshotPath);
+				
+		}
+			
+			
+		else if(result.getStatus()==ITestResult.SKIP)
+		{
+			testinfo.log(Status.SKIP, "the skipped test method name as:" +result.getName()+ "is skipped");
+				
+		}
+		Thread.sleep(4000l);
+		driver.quit();
+			
+	}
+	
+
+	
+	@AfterTest
+	public void cleanup()
+	{
+		reports.flush();
+	}
+	
+
+	
+	
+}
+
+
+--------------------------------------------------------------------------------------------------------
+
+
+
+
+
+<?xml version="1.0" encoding="UTF-8"?>
+<extentreports>
+    <configuration>
+        <!-- report theme -->
+        <!-- standard, dark -->
+        <theme>dark</theme>
+    
+        <!-- document encoding -->
+        <!-- defaults to UTF-8 -->
+        <encoding>UTF-8</encoding>
+        
+        <!-- protocol for script and stylesheets -->
+        <!-- defaults to https -->
+        <protocol>https</protocol>
+        
+        <!-- title of the document -->
+        <documentTitle>Extent</documentTitle>
+        
+        <!-- report name - displayed at top-nav -->
+        <reportName>Automation Report by krishna sagar</reportName>
+        
+        <!-- location of charts in the test view -->
+        <!-- top, bottom -->
+        <testViewChartLocation>bottom</testViewChartLocation>
+		
+        <!-- custom javascript -->
+        <scripts>
+            <![CDATA[
+                $(document).ready(function() {
+                    
+                });
+            ]]>
+        </scripts>
+        
+        <!-- custom styles -->
+        <styles>
+            <![CDATA[
+                
+            ]]>
+        </styles>
+    </configuration>
+</extentreports>
+
+
+------------------------------------------------------------------------------------------
+
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE suite SYSTEM "http://testng.org/testng-1.0.dtd">
+<suite name="Suite">
+  <test thread-count="5" name="Test">
+    <classes>
+      <class name="newpack.EssReview"/>
+    </classes>
+  </test> <!-- Test -->
+</suite> <!-- Suite -->
