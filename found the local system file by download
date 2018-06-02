@@ -1,0 +1,200 @@
+package testCase;
+
+import java.awt.Robot;
+import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.FileInputStream;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+public class DownLoadUpLoad {
+	WebDriver driver;
+
+	@Test
+	public void fileUser() throws Exception {
+
+		String downloadFilepath = "C:\\Users\\SDRC_ADMIN\\Downloads\\seleniumFileDownloadProject";
+
+		Properties propBrowser = new Properties();
+		FileInputStream fisBrowser = new FileInputStream(
+				"D:\\protractorWithEclipse\\SDRCx\\src\\main\\java\\configDataToProject\\controler.properties");
+		propBrowser.load(fisBrowser);
+		String browser = propBrowser.getProperty("browser");
+		if (browser.equalsIgnoreCase("firefox")) {
+			System.setProperty("webdriver.gecko.driver", "D:\\selenium driver\\geckodriver.exe");
+
+			driver = new FirefoxDriver();
+			/*
+			 * FirefoxProfile fprofile = new FirefoxProfile();
+			 * 
+			 * 
+			 * DesiredCapabilities capabilities = DesiredCapabilities.firefox();
+			 * capabilities.setCapability(CapabilityType.ACCEPT_SSL_CERTS,
+			 * true); capabilities.setCapability(FirefoxOptions.FIREFOX_OPTIONS,
+			 * fprofile);
+			 * 
+			 * fprofile.setPreference("browser.download.dir",
+			 * "C:\\Users\\SDRC_ADMIN\\Downloads\\seleniumFileDownloadProject");
+			 * fprofile.setPreference("browser.download.folderList", 2);
+			 * fprofile.setPreference("browser.helperApps.neverAsk.saveToDisk",
+			 * "application/vnd.ms-excel"); fprofile.setPreference(
+			 * "browser.download.manager.showWhenStarting", false); //
+			 * fprofile.setPreference("pdfjs.disabled", true); // driver = new
+			 * FirefoxDriver(fprofile); File f1= new File(
+			 * "C:\\Users\\SDRC_ADMIN\\Downloads\\wassan_SOE31052018174319.xls")
+			 * ; long file1; do { file1=f1.length(); System.out.println(file1);
+			 * Thread.sleep(8000l); }
+			 * 
+			 * while(file1==0); File f=new File(
+			 * "C:\\Users\\SDRC_ADMIN\\Downloads\\wassan_SOE31052018174319.xls")
+			 * ; if(f.exists()&&file1>0){ System.out.println("pass"); } else{
+			 * System.out.println("fail"); }
+			 */
+		} else if (browser.equalsIgnoreCase("chrome")) {
+			System.setProperty("webdriver.chrome.driver", "D:\\selenium driver\\chromedriver.exe");
+			driver = new ChromeDriver();
+			driver.manage().window().maximize();
+		} else if (browser.equalsIgnoreCase("ie")) {
+			System.setProperty("webdriver.ie.driver", "D:\\selenium driver\\IEDriverServer.exe");
+			driver = new InternetExplorerDriver();
+		} else {
+			throw new Exception("Browser is not correct");
+		}
+		driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		driver.get(propBrowser.getProperty("url"));
+
+		if (browser.contains("firefox")) {
+			String homepage_title = driver.getTitle();
+			System.out.println(driver.getTitle());
+			Assert.assertEquals(homepage_title, "Mission Millets-Login");
+			driver.findElement(By.xpath("(//input[@name='username'])[1]")).sendKeys("admin");
+			driver.findElement(By.xpath("(//input[@name='password'])[1]")).sendKeys("test@123#");
+			driver.findElement(By.xpath("//button[text()='SUBMIT']")).click();
+			Thread.sleep(2000l);
+			driver.findElement(By.xpath("//label[@for='upload-file-selector']")).click();
+			Thread.sleep(3000l);
+			Robot robot = new Robot();
+			Robot robot1 = new Robot();
+			Thread.sleep(3000l);
+			robot.keyPress(KeyEvent.VK_ENTER);
+			robot.keyRelease(KeyEvent.VK_ENTER);
+			Thread.sleep(3000l);
+			robot1.keyPress(KeyEvent.VK_ALT);
+			robot1.keyPress(KeyEvent.VK_F4);
+			robot1.keyRelease(KeyEvent.VK_ALT);
+			robot1.keyRelease(KeyEvent.VK_F4);
+			driver.findElement(By.xpath("//button[text()='SUBMIT']")).click();
+			//Thread.sleep(3000l);
+			Thread.sleep(5000l);
+			WebElement error_window = driver.findElement(By.xpath("(//div[@class='modal-body text-center'])[3]"));
+			WebElement close_button = driver.findElement(By.xpath("(//button[text()='Close'])[1]"));
+			Actions check = new Actions(driver);
+			check.moveToElement(error_window).moveToElement(close_button).click().build().perform();
+			Thread.sleep(2000l);
+
+		} else {
+			System.out.println("check the browser");
+			String homepage_title = driver.getTitle();
+			System.out.println(driver.getTitle());
+			Assert.assertEquals(homepage_title, "Mission Millets-Login");
+			driver.findElement(By.xpath("(//input[@name='username'])[1]")).sendKeys("admin");
+			driver.findElement(By.xpath("(//input[@name='password'])[1]")).sendKeys("test@123#");
+			driver.findElement(By.xpath("//button[text()='SUBMIT']")).click();
+			Thread.sleep(2000l);
+			driver.findElement(By.xpath("//label[@for='upload-file-selector']")).click();
+			Thread.sleep(4000l);
+			driver.findElement(By.xpath("//button[text()='SUBMIT']")).click();
+			//Thread.sleep(3000l);
+			Thread.sleep(2000l);
+			WebElement error_window = driver.findElement(By.xpath("(//div[@class='modal-body text-center'])[3]"));
+			WebElement close_button = driver.findElement(By.xpath("(//button[text()='Close'])[1]"));
+			Actions check = new Actions(driver);
+			check.moveToElement(error_window).moveToElement(close_button).click().build().perform();
+			Thread.sleep(2000l);
+
+		}
+
+		File downloadFolder =new File("C:\\Users\\SDRC_ADMIN\\Downloads\\");
+		
+		List<String> wassanDownloadedFiles = listFilesForFolder(downloadFolder);
+		
+		
+		String latestFile = "C:\\Users\\SDRC_ADMIN\\Downloads\\" + getLatestFile(wassanDownloadedFiles);
+		System.out.println(latestFile);
+	}
+
+	
+	/**
+	 * This will give the latest file out of list of file
+	 * @param wassanDownloadedFiles
+	 * @return
+	 * @throws ParseException 
+	 */
+	private String getLatestFile(List<String> wassanDownloadedFiles) throws ParseException {
+		
+		String latestFile = null;
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("ddMMyyyyHHmmss");
+		
+		for (int i = 0; i < wassanDownloadedFiles.size();i++) {
+			
+			if(i == 0){
+				latestFile = wassanDownloadedFiles.get(0);
+			}else{				
+				if(i < (wassanDownloadedFiles.size())){
+					String firstFile = wassanDownloadedFiles.get(i);//1 index file					
+					String firstFileTimestamp = firstFile.substring(10, 24);
+					String latestFileTimestamp = latestFile.substring(10, 24);					
+					Date firstDate = sdf.parse(firstFileTimestamp);
+					Date latestdDate = sdf.parse(latestFileTimestamp);					
+					if(firstDate.compareTo(latestdDate) > 0){
+						latestFile = firstFile;
+					}		
+				}
+			}		
+		}
+		
+		return latestFile;
+	}
+
+	/**
+	 * This method will give us all wassan downloaded files  
+	 * @param folder
+	 * @return
+	 */
+	public List<String> listFilesForFolder(final File folder) {
+		
+		List<String> wassonDownloadedFiles = new ArrayList<>();
+		
+		for (final File fileEntry : folder.listFiles()) {
+			
+			if (fileEntry.isDirectory()) {
+				listFilesForFolder(fileEntry);
+			} else {
+				String filename = fileEntry.getName();
+				if(filename.contains("wassan_SOE")){
+					//adding wassan downloaded files to list
+					wassonDownloadedFiles.add(filename);
+				}				
+			}
+		}
+		
+		return wassonDownloadedFiles;
+	}
+
+}
