@@ -1,0 +1,231 @@
+package excelDataConfig;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+public class ExcelDataCofig {
+	XSSFWorkbook wb;
+	XSSFSheet sheet1;
+	
+	public ExcelDataCofig(String excelpath) throws IOException
+	{
+		//File srcdata=new File("D:\\testdata.xlsx");
+		try {
+			File srcdata=new File(excelpath);
+			FileInputStream fisdata=new FileInputStream(srcdata);
+         wb= new XSSFWorkbook(fisdata);
+        
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			
+			System.out.println(e.getMessage());
+		}
+	}
+	
+	public String getData(int sheetNumber, int row,int column)
+	{
+		
+		 sheet1=wb.getSheetAt(sheetNumber);
+		String data=sheet1.getRow(row).getCell(column).getStringCellValue();
+		return data;
+		
+	}
+
+}
+**********************************************************************
+
+package testCase;
+
+import java.io.FileInputStream;
+import java.util.Properties;
+import java.util.concurrent.TimeUnit;
+
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.ie.InternetExplorerDriver;
+import org.openqa.selenium.interactions.Actions;
+import org.testng.Assert;
+import org.testng.annotations.Test;
+
+import excelDataConfig.ExcelDataCofig;
+import objectRepo.GlobalLoginPageObject;
+import report.BaseClassForOtherStandalone;
+import report.StandaloneReportForExternalFile;
+
+
+/**
+ * 
+ * @author SDRC_KRISHNA SAGAR
+ *
+ *this class is responsible for any login page
+ *
+ */
+
+public class GlobalLogin extends StandaloneReportForExternalFile {
+//public class GlobalLogin extends BaseClassForOtherStandalone {
+
+//public class GlobalLogin  {
+	//WebDriver driver;
+	@Test
+	public void loginPage() throws Exception
+	{
+		
+	
+
+		/*
+		 * properties class is responsible for dynamic input of browser and URL of the project.
+		 * 
+		 */
+		Properties propBrowser = new Properties();
+		FileInputStream fisBrowser = new FileInputStream("D:\\protractorWithEclipse\\projectWithExternalFile\\src\\configDataToProject\\controler.properties");
+		propBrowser.load(fisBrowser);
+		String browser=propBrowser.getProperty("browser");
+		 if(browser.equalsIgnoreCase("firefox")){
+			 System.setProperty("webdriver.gecko.driver","D:\\selenium driver\\geckodriver.exe");
+		            driver = new FirefoxDriver(); 
+		        }
+		        else if(browser.equalsIgnoreCase("chrome")){
+		        	System.setProperty("webdriver.chrome.driver", "D:\\selenium driver\\chromedriver.exe");
+		            driver = new ChromeDriver();
+		            driver.manage().window().maximize();
+		        }
+		                else if(browser.equalsIgnoreCase("ie")){
+		                	System.setProperty("webdriver.ie.driver", "D:\\selenium driver\\IEDriverServer.exe");
+		                    driver = new InternetExplorerDriver();
+		                }
+		        else{
+		            throw new Exception("Browser is not correct");
+		        }
+		        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		        driver.get(propBrowser.getProperty("url"));
+		
+		        /*
+		         * check the title of every project.
+		         */
+		String homepage_title=driver.getTitle();
+		System.out.println(driver.getTitle());
+		Assert.assertEquals(homepage_title, propBrowser.getProperty("title"));
+		
+		
+		/*
+		 * login page may be missed from home page
+		 */
+		try
+		{
+		driver.findElement(By.xpath("//a[text()='Login']")).click();
+		Thread.sleep(1000l);
+		}
+		
+		catch(Exception e)
+		{
+			System.out.println("this project do not contain the login link at the home page.");
+		}
+		
+		
+		 /*
+		  * below code is responsible for fetching the data from local excel file.
+		  * 
+		  * 
+		  */
+		
+		
+		
+		
+		ExcelDataCofig excel1=new ExcelDataCofig("D:\\loginpage.xlsx");
+		String usernameMM=excel1.getData(1, 1, 0);
+		System.out.println(usernameMM + " :username of Mission millet");
+		String passwordMM=excel1.getData(1, 1, 1);
+		System.out.println(passwordMM + " :password of Mission millet");
+		String usernameBBBP=excel1.getData(0, 1, 0);
+		System.out.println(usernameBBBP + " :username of BBBP");
+		String passwordBBBP=excel1.getData(0, 1, 1);
+		System.out.println(passwordBBBP + " :password of BBBP");
+		
+		
+		
+		
+		
+		
+		/*
+		 * login page user name and passowrd 
+		 * click on submit button 
+		 * click on logout button
+		 * 
+		 */
+		
+		
+	/*	 driver.findElement(By.xpath("(//input[@name='username'])[1]")).sendKeys("bbbp_ladakh_ja");
+		//driver.findElement(By.xpath("//input[@id='usr']")).sendKeys("bbbp_ladakh_ja");
+		driver.findElement(By.xpath("(//input[@name='password'])[1]")).sendKeys("ladakh123");
+		//driver.findElement(By.xpath("//input[@id='pwd']")).sendKeys("ladakh123");
+		driver.findElement(By.xpath("//button[text()='Submit']")).click();
+		Thread.sleep(2000l);
+		driver.findElement(By.xpath("//a[text()='Logout']")).click();*/
+		
+/*
+ * Use the Fetching data from excel file
+ * login page user name and passowrd from excel file
+ * click on submit button 
+ * click on logout button
+ * 
+ */
+		/*    driver.findElement(By.xpath("(//input[@name='username'])[1]")).sendKeys(usernameBBBP);
+			driver.findElement(By.xpath("(//input[@name='password'])[1]")).sendKeys(passwordBBBP);
+			driver.findElement(By.xpath("//button[text()='Submit']")).click();*/
+			
+		
+		/*
+		 * 
+		 * mission millet login by excel
+		 */
+		
+		      /*  driver.findElement(By.xpath("(//input[@name='username'])[1]")).sendKeys(usernameMM);
+				driver.findElement(By.xpath("(//input[@name='password'])[1]")).sendKeys(passwordMM);
+				driver.findElement(By.xpath("//button[@type='submit']")).click();*/
+				
+		/*
+		 * Login with propertiesFile.
+		 * 
+		 * 
+		 */
+				
+				/*driver.findElement(By.xpath("(//input[@name='username'])[1]")).sendKeys(propBrowser.getProperty("username"));
+				driver.findElement(By.xpath("(//input[@name='password'])[1]")).sendKeys(propBrowser.getProperty("password"));
+				driver.findElement(By.xpath("//button[@type='submit']")).click();
+			    Thread.sleep(1000l);*/
+		
+		/*
+		 * Login with GlobalLoginpageObject
+		 * 
+		 * 
+		 */
+		
+		GlobalLoginPageObject log=new GlobalLoginPageObject(driver);
+		log.LoginToApplication();
+				
+		
+			    try{
+			    WebElement settingSymbol=	driver.findElement(By.xpath("(//a[@class='dropdown-toggle'])[4]"));
+			    Actions click_settingSymbol=new Actions(driver);
+			    click_settingSymbol.moveToElement(settingSymbol).click().build().perform();
+			    Thread.sleep(1000l);	
+			    driver.findElement(By.xpath("//a[text()='Logout']")).click();
+			    }
+		        catch(Exception i)
+			    {
+			    Thread.sleep(1000l);
+		        driver.findElement(By.xpath("//a[text()='Logout']")).click();
+			    }
+		
+		
+	}
+
+}
+
