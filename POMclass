@@ -1,0 +1,44 @@
+package objectRepo;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.util.Properties;
+
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.FindBy;
+import org.openqa.selenium.support.PageFactory;
+
+public class GlobalLoginPageObject {
+
+WebDriver driver;
+
+	@FindBy(xpath="//button[text()='Login']")
+	WebElement Loginlink;
+	@FindBy(xpath="(//input[@name='username'])[1]")
+	WebElement username1;
+	@FindBy(xpath="(//input[@name='password'])[1]")
+	WebElement password1;
+	@FindBy(xpath="//button[@type='submit']")
+	WebElement Loginbutton;
+	public GlobalLoginPageObject(WebDriver driver)
+	{
+		this.driver=driver;
+		PageFactory.initElements(driver, this);
+	}
+	public void LoginToApplication() throws InterruptedException, IOException
+	{
+		System.out.println("home...");
+		//Thread.sleep(4000l);
+		//Loginlink.click();
+		//Thread.sleep(4000l);
+		Properties prop2 = new Properties();
+		FileInputStream fis2 = new FileInputStream("D:\\protractorWithEclipse\\projectWithExternalFile\\src\\configDataToProject\\controler.properties");
+		prop2.load(fis2);
+		username1.sendKeys(prop2.getProperty("ValidUsername"));
+		password1.sendKeys(prop2.getProperty("ValidPassword"));
+		/*username1.sendKeys("bcvb");
+		password1.sendKeys("hgfhgfh");*/		
+		Loginbutton.click();		
+	}	
+}
