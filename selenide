@@ -1,0 +1,25 @@
+package testCase;
+
+import org.openqa.selenium.By;
+import org.testng.annotations.Test;
+import static com.codeborne.selenide.Selenide.*;
+public class LoginPage {
+	
+	@Test
+	public void login()
+	{
+		//System.setProperty("webdriver.chrome.driver", "D:\\selenium driver\\chromedriver.exe");
+		//System.setProperty("selenide.browser", "Chrome");
+		   open("http://devserver.sdrc.co.in:8080/missionmillet/");
+		   $(By.name("username")).setValue("admin");
+		   $(By.name("password")).setValue("test@123#");
+		   $(By.xpath("//button[@type='submit']")).click();
+		   
+		   //$("#submit").click();
+		   //$(".success-message").shouldHave();
+		   //
+		  // $(By.xpath("//button[@type='submit']")).click();
+	}
+	
+
+}
