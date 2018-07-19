@@ -1,0 +1,9 @@
+1.
+String name=valiName
+@FindBy(xpath="//a[text()="+name+"]")
+	public WebElement VOLUNTEERSoption;
+  
+  
+  2.
+  String customerLinkXpath = "//td[@contains(text(),'username']/a";
+driver.findElement(By.xpath(customerLinkXpath.Replace("username", customerName));
