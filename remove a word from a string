@@ -1,0 +1,3 @@
+String line = "foo";
+line = line.replace("f", "");
+System.out.println(line);
