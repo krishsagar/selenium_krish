@@ -7,3 +7,8 @@ String name=valiName
   2.
   String customerLinkXpath = "//td[@contains(text(),'username']/a";
 driver.findElement(By.xpath(customerLinkXpath.Replace("username", customerName));
+
+3.
+
+String customerLinkXpath = "//td[@contains(text(),'username']/a";
+	driver.findElement(customerLinkXpath);
