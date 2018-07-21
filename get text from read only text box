@@ -1,0 +1,18 @@
+
+@FindBy(xpath = "//div/input[@id='userName']")
+	 WebElement userName;
+   
+   
+   	public UserManagementChangePassword(WebDriver driver) {
+		this.driver = driver;
+		PageFactory.initElements(driver, this);
+	}
+
+public void VerifyTheUserName() throws InterruptedException, IOException {
+		Thread.sleep(4000l);
+		ChangePasswordLink.click();
+		Thread.sleep(4000l);
+		System.out.println(userName.getAttribute("value"));
+
+	}
+		
