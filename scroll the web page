@@ -11,3 +11,10 @@ WebElement scroll_to_the element=driver.findElement(By.xpath("//input[@krish='kr
 
 JavascriptExecutor jse = (JavascriptExecutor)driver;
 jse.executeScript("window.scrollBy(0,250)", "");
+
+
+
+//By Rajendra Mahapatra
+
+Coordinates coordinate=((Locatable) element).getcoordinates();
+coordinate.inviewpoint();
