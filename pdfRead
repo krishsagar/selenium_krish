@@ -1,0 +1,20 @@
+add Apache PDFBox from maven 2.0.12jar
+//do not use dirrectly code from here ,some shortcuts i usered here
+
+@Test
+public void readPDFTEST()
+{
+sys.setProerty("webdriver.chrome.driver","hfghfg//kjkghjhg//chroime.exe");
+webDriver driver= new chromeDriver();
+driver.get("http://www.sfsdfsd.pdf");
+String currenturl=driver.getCurrentUrl();
+Sys.out.println(currenturl);
+URl url=new URL(currenturl);//here we can use local pdf file location , just open the local pdf by openwith chrome browser, copy and pest the path here.
+InputStream is=url.openStream();
+BufferedInputStream fileparse=new BufferedInputStream(is);
+PDDocument document=null;
+document=PDDocument.load(fileparse);
+String pdfContent=new PDFTextStripper().gotText(document);
+Sys.out.println(pdfContent);
+Assert.assertTrue(pdfContent.contains("Company Name"));
+}
