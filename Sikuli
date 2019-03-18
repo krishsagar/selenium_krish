@@ -1,0 +1,14 @@
+@test
+public void Sikuli()
+{
+
+Screen sc= new Screen();
+Pattern im= new Pattern ("c:\\kfolder\\play.png")
+Pattern im1= new Pattern ("c:\\kfolder\\uiserName.png")
+sc.click(im);
+sc.wait(im1,10);
+sc.type(im1,"krishna sagar");
+sc.find("play.png")
+sc.dragDrop("im","im1")
+
+}
